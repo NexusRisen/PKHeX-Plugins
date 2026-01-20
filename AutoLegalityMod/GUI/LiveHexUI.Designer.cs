@@ -92,11 +92,11 @@
             groupBox5.Controls.Add(B_EditBlock);
             groupBox5.Controls.Add(L_Block);
             groupBox5.Enabled = false;
-            groupBox5.Location = new System.Drawing.Point(186, 6);
+            groupBox5.Location = new System.Drawing.Point(4, 103);
             groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox5.Name = "groupBox5";
             groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox5.Size = new System.Drawing.Size(202, 144);
+            groupBox5.Size = new System.Drawing.Size(385, 91);
             groupBox5.TabIndex = 13;
             groupBox5.TabStop = false;
             groupBox5.Text = "Block Editor";
@@ -108,14 +108,14 @@
             CB_BlockName.Location = new System.Drawing.Point(53, 22);
             CB_BlockName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             CB_BlockName.Name = "CB_BlockName";
-            CB_BlockName.Size = new System.Drawing.Size(143, 22);
+            CB_BlockName.Size = new System.Drawing.Size(176, 22);
             CB_BlockName.Sorted = true;
             CB_BlockName.TabIndex = 22;
             // 
             // B_EditBlock
             // 
             B_EditBlock.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            B_EditBlock.Location = new System.Drawing.Point(62, 50);
+            B_EditBlock.Location = new System.Drawing.Point(52, 50);
             B_EditBlock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             B_EditBlock.Name = "B_EditBlock";
             B_EditBlock.Size = new System.Drawing.Size(84, 28);
@@ -146,33 +146,31 @@
             GB_Boxes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             GB_Boxes.Name = "GB_Boxes";
             GB_Boxes.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            GB_Boxes.Size = new System.Drawing.Size(174, 144);
+            GB_Boxes.Size = new System.Drawing.Size(385, 91);
             GB_Boxes.TabIndex = 8;
             GB_Boxes.TabStop = false;
             GB_Boxes.Text = "Boxes";
             // 
             // checkBox2
             // 
-            checkBox2.AutoSize = true;
             checkBox2.Checked = true;
             checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            checkBox2.Location = new System.Drawing.Point(15, 44);
+            checkBox2.Location = new System.Drawing.Point(165, 22);
             checkBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             checkBox2.Name = "checkBox2";
-            checkBox2.Size = new System.Drawing.Size(129, 19);
+            checkBox2.Size = new System.Drawing.Size(146, 25);
             checkBox2.TabIndex = 3;
             checkBox2.Text = "Inject In Slot On Set";
             checkBox2.UseVisualStyleBackColor = true;
             // 
             // CB_ReadBox
             // 
-            CB_ReadBox.AutoSize = true;
             CB_ReadBox.Checked = true;
             CB_ReadBox.CheckState = System.Windows.Forms.CheckState.Checked;
             CB_ReadBox.Location = new System.Drawing.Point(15, 22);
             CB_ReadBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             CB_ReadBox.Name = "CB_ReadBox";
-            CB_ReadBox.Size = new System.Drawing.Size(138, 19);
+            CB_ReadBox.Size = new System.Drawing.Size(146, 25);
             CB_ReadBox.TabIndex = 2;
             CB_ReadBox.Text = "Read On Change Box";
             CB_ReadBox.UseVisualStyleBackColor = true;
@@ -180,7 +178,7 @@
             // B_ReadCurrent
             // 
             B_ReadCurrent.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            B_ReadCurrent.Location = new System.Drawing.Point(15, 70);
+            B_ReadCurrent.Location = new System.Drawing.Point(11, 53);
             B_ReadCurrent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             B_ReadCurrent.Name = "B_ReadCurrent";
             B_ReadCurrent.Size = new System.Drawing.Size(146, 27);
@@ -192,7 +190,7 @@
             // B_WriteCurrent
             // 
             B_WriteCurrent.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            B_WriteCurrent.Location = new System.Drawing.Point(15, 100);
+            B_WriteCurrent.Location = new System.Drawing.Point(165, 53);
             B_WriteCurrent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             B_WriteCurrent.Name = "B_WriteCurrent";
             B_WriteCurrent.Size = new System.Drawing.Size(146, 27);
@@ -416,7 +414,7 @@
             // 
             RamSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             RamSize.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            RamSize.Location = new System.Drawing.Point(53, 67);
+            RamSize.Location = new System.Drawing.Point(61, 67);
             RamSize.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             RamSize.MaxLength = 8;
             RamSize.Name = "RamSize";
@@ -427,6 +425,7 @@
             // RB_Main
             // 
             RB_Main.AutoSize = true;
+            RB_Main.ForeColor = System.Drawing.SystemColors.ControlText;
             RB_Main.Location = new System.Drawing.Point(76, 42);
             RB_Main.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             RB_Main.Name = "RB_Main";
@@ -437,7 +436,7 @@
             // 
             // L_ReadRamSize
             // 
-            L_ReadRamSize.Location = new System.Drawing.Point(0, 64);
+            L_ReadRamSize.Location = new System.Drawing.Point(8, 64);
             L_ReadRamSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             L_ReadRamSize.Name = "L_ReadRamSize";
             L_ReadRamSize.Size = new System.Drawing.Size(45, 23);
@@ -541,7 +540,6 @@
             tabPage1.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
             GB_Boxes.ResumeLayout(false);
-            GB_Boxes.PerformLayout();
             tabControl1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
