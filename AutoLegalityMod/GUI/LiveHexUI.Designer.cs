@@ -82,7 +82,7 @@
             tabPage1.Location = new System.Drawing.Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(396, 232);
+            tabPage1.Size = new System.Drawing.Size(396, 220);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Basic";
             // 
@@ -292,7 +292,7 @@
             tabControl1.Location = new System.Drawing.Point(3, 34);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new System.Drawing.Size(404, 260);
+            tabControl1.Size = new System.Drawing.Size(404, 248);
             tabControl1.TabIndex = 16;
             // 
             // tabPage2
@@ -304,7 +304,7 @@
             tabPage2.Location = new System.Drawing.Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(396, 232);
+            tabPage2.Size = new System.Drawing.Size(396, 220);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Advanced";
             // 
@@ -328,7 +328,7 @@
             // B_ReadPointer
             // 
             B_ReadPointer.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            B_ReadPointer.Location = new System.Drawing.Point(126, 50);
+            B_ReadPointer.Location = new System.Drawing.Point(130, 50);
             B_ReadPointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             B_ReadPointer.Name = "B_ReadPointer";
             B_ReadPointer.Size = new System.Drawing.Size(110, 27);
@@ -340,7 +340,7 @@
             // B_CopyAddress
             // 
             B_CopyAddress.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            B_CopyAddress.Location = new System.Drawing.Point(244, 50);
+            B_CopyAddress.Location = new System.Drawing.Point(248, 50);
             B_CopyAddress.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             B_CopyAddress.Name = "B_CopyAddress";
             B_CopyAddress.Size = new System.Drawing.Size(110, 27);
@@ -370,15 +370,15 @@
             TB_Pointer.Location = new System.Drawing.Point(68, 21);
             TB_Pointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             TB_Pointer.Name = "TB_Pointer";
-            TB_Pointer.Size = new System.Drawing.Size(278, 20);
+            TB_Pointer.Size = new System.Drawing.Size(290, 20);
             TB_Pointer.TabIndex = 18;
             // 
             // L_Pointer
             // 
-            L_Pointer.Location = new System.Drawing.Point(4, 18);
+            L_Pointer.Location = new System.Drawing.Point(7, 19);
             L_Pointer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             L_Pointer.Name = "L_Pointer";
-            L_Pointer.Size = new System.Drawing.Size(57, 23);
+            L_Pointer.Size = new System.Drawing.Size(53, 23);
             L_Pointer.TabIndex = 17;
             L_Pointer.Text = "Pointer:";
             L_Pointer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -437,12 +437,12 @@
             // 
             // L_ReadRamSize
             // 
-            L_ReadRamSize.Location = new System.Drawing.Point(15, 64);
+            L_ReadRamSize.Location = new System.Drawing.Point(0, 64);
             L_ReadRamSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             L_ReadRamSize.Name = "L_ReadRamSize";
-            L_ReadRamSize.Size = new System.Drawing.Size(30, 23);
+            L_ReadRamSize.Size = new System.Drawing.Size(45, 23);
             L_ReadRamSize.TabIndex = 19;
-            L_ReadRamSize.Text = "Size:";
+            L_ReadRamSize.Text = "Bytes:";
             L_ReadRamSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // RB_Heap
@@ -522,7 +522,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(409, 298);
+            ClientSize = new System.Drawing.Size(409, 285);
             Controls.Add(tabControl1);
             Controls.Add(connectionMode);
             Controls.Add(TB_Port);
