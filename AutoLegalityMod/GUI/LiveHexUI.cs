@@ -718,6 +718,11 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
 
         var size = Remote.Bot.SlotSize;
         var data = sb.ReadBytesAbsolute(address, size);
+        if (data.All(b=>b==0))
+        {
+            WinFormsUtil.Alert("No valid data is located at the specified offset.");
+            return;
+        }
         var pkm = SAV.SAV.GetDecryptedPKM(data);
 
         // Since data might not actually exist at the user-specified offset, double check that the pkm data is valid.
