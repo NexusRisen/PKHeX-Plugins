@@ -17,12 +17,7 @@ public static class Decoder
 
     public static void ConvertHexByteStringToBytes(ReadOnlySpan<byte> bytes, Span<byte> dest)
     {
-        for (int i = 0; i < dest.Length; i++)
-        {
-            var _0 = (char)bytes[(i * 2) + 0];
-            var _1 = (char)bytes[(i * 2) + 1];
-            dest[i] = DecodeTuple(_0, _1);
-        }
+        Convert.FromHexString(bytes, dest, out _, out _);
     }
 
     public static byte[] StringToByteArray(ReadOnlySpan<char> hex) => Convert.FromHexString(hex);
