@@ -272,7 +272,7 @@ public sealed class LPPointer : InjectionBase
 
     public static string GetSaveBlockPointer(LiveHeXVersion lv) => lv switch
     {
-        ZA_v201 => "[[main+610DB40]+30]",
+        ZA_v201 => "[[main+610A670]+30]",
         ZA_v200 => "[[main+6105670]+30]",
         ZA_v103 => "[[main+5F0E1B0]+30]",
         ZA_v102 => "[[main+5F0C1B0]+30]",
