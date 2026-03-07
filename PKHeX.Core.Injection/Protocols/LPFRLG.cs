@@ -21,17 +21,28 @@ public sealed class LPFRLG : InjectionBase
     { 
         LiveHeXVersion.FRLG_E_v100 => 0xBD68D2E0,
         LiveHeXVersion.FRLG_I_v100 => 0xBD68D230,
+        LiveHeXVersion.FRLG_D_v100 => 0xBD68D230,
+        LiveHeXVersion.FRLG_S_v100 => 0xBD68D230,
+        LiveHeXVersion.FRLG_F_v100 => 0xBD68D230,
+        LiveHeXVersion.FRLG_J_v100 => 0xBD68D240,
     };
     public uint GetLargeBlockOffset(LiveHeXVersion lv) => lv switch
     {
         LiveHeXVersion.FRLG_E_v100 => 0xBD68D2D8,
         LiveHeXVersion.FRLG_I_v100 => 0xBD68D228,
-        _ => 0,
+        LiveHeXVersion.FRLG_D_v100 => 0xBD68D228,
+        LiveHeXVersion.FRLG_S_v100 => 0xBD68D228,
+        LiveHeXVersion.FRLG_F_v100 => 0xBD68D228,
+        LiveHeXVersion.FRLG_J_v100 => 0xBD68D238,
     };
     public uint GetSmallBlockOffset(LiveHeXVersion lv) => lv switch
     {
         LiveHeXVersion.FRLG_E_v100 => 0xBD68D2DC,
         LiveHeXVersion.FRLG_I_v100 => 0xBD68D22C,
+        LiveHeXVersion.FRLG_D_v100 => 0xBD68D22C,
+        LiveHeXVersion.FRLG_S_v100 => 0xBD68D22C,
+        LiveHeXVersion.FRLG_F_v100 => 0xBD68D22C,
+        LiveHeXVersion.FRLG_J_v100 => 0xBD68D23C,
         _ => 0,
     };
     public override Span<byte> ReadBox(PokeSysBotMini psb, int box, int len, List<byte[]> allpkm)
@@ -83,18 +94,22 @@ public sealed class LPFRLG : InjectionBase
         read = null;
         try
         {
-            var offsets = SCBlocks[psb.Version].Where(z => z.Display == block).First();
+            var offsets = SCBlocks[psb.Version].Where(z => z.Display == (block == "Large" ? "Items" : block)).First();
             var props = sav.GetType().GetProperty(block) ?? throw new Exception($"{block} not found");
             var blockoffbytes = offsets.Name == "Large" ? psb.com.ReadBytes(GetLargeBlockOffset(psb.Version), 4) : psb.com.ReadBytes(GetSmallBlockOffset(psb.Version), 4);
             var blockoff = BitConverter.ToUInt32(blockoffbytes);
             blockoff -= fakeHeap;
             blockoff += startingOffset;
             blockoff += (uint)offsets.Offset;
-            var ram = psb.com.ReadBytes(blockoff, Marshal.SizeOf(props.PropertyType));
+            var size = offsets.Name == "Large" ? 0x3e00 : Marshal.SizeOf(props.PropertyType);
+            var ram = psb.com.ReadBytes(blockoff, size);
             var val = ConvertValue(props, ram);
             if (offsets.IsSecured)
                 val = (uint)val ^ ((SAV3FRLG)sav).SecurityKey;
-            props.SetValue(sav, val);
+            if (offsets.Display == "Large")
+                ram.CopyTo(((SAV3)sav).Large);
+            else
+                props.SetValue(sav, val);
             read = [ram.ToArray()];
             return true;
         }
@@ -107,8 +122,8 @@ public sealed class LPFRLG : InjectionBase
     public override void WriteBlocksFromSAV(PokeSysBotMini psb, string block, SaveFile sav)
     {
         var props = sav.GetType().GetProperty(block) ?? throw new Exception($"{block} not found");
-        var offsets = SCBlocks[psb.Version].Where(z => z.Display == block).First();
-        var data = props.GetValue(sav);
+        var offsets = SCBlocks[psb.Version].Where(z => z.Display == (block == "Large" ? "Items" : block)).First();
+        var data = block == "Large" ? ((SAV3)sav).Large.ToArray() : props.GetValue(sav);
         if (offsets.IsSecured)
             data = (uint)data ^ ((SAV3FRLG)sav).SecurityKey;
         var blockoffbytes = offsets.Name == "Large" ? psb.com.ReadBytes(GetLargeBlockOffset(psb.Version), 4) : psb.com.ReadBytes(GetSmallBlockOffset(psb.Version), 4);
@@ -116,7 +131,7 @@ public sealed class LPFRLG : InjectionBase
         blockoff -= fakeHeap;
         blockoff += startingOffset;
         blockoff += (uint)offsets.Offset;
-        psb.com.WriteBytes(BitConverter.GetBytes((uint)data), blockoff);
+        psb.com.WriteBytes(block == "Large" ? (byte[])data : BitConverter.GetBytes((uint)data), blockoff);
     }
     public object ConvertValue(PropertyInfo info, Span<byte> bytes)
     {
@@ -127,8 +142,10 @@ public sealed class LPFRLG : InjectionBase
             return BitConverter.ToUInt32(bytes);
         else if (t == typeof(UInt64))
             return BitConverter.ToUInt64(bytes);
+        else if (t == typeof(UInt128))
+            return BitConverter.ToUInt128(bytes);
         else
-            BitConverter.ToUInt128(bytes);
+            return bytes.ToArray();
         throw new InvalidEnumArgumentException($"Unsupported type {t} for {info.Name}");
     }
     private static BlockData Get(uint offset, string name, string display, SCTypeCode type) => new()
@@ -154,11 +171,18 @@ public sealed class LPFRLG : InjectionBase
     public static readonly BlockData[] Blocks_FRLG = new[]
     {
         Get(0x290, "Large", "Money", true),
+        Get(0x294, "Large", "Coin", true),
+        Get(0, "Large", "Items"),
+        Get(0xF20, "Small", "SecurityKey")
     };
     public static readonly Dictionary<LiveHeXVersion, BlockData[]> SCBlocks = new()
     {
         { FRLG_E_v100, Blocks_FRLG  },
         { FRLG_I_v100, Blocks_FRLG },
+    };
+    public override Dictionary<string, string> SpecialBlocks { get; } = new()
+    {
+        { "Large", "B_OpenItemPouch_Click" },
     };
 }
 

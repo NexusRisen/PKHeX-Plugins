@@ -741,8 +741,12 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
     {
         var txt = CB_BlockName.Text;
         var version = Remote.Bot.Version;
-        if (Remote.Bot.Version >= LiveHeXVersion.FRLG_E_v100)
+        if (version >= LiveHeXVersion.FRLG_E_v100)
+        {
+            if (txt == "Items")
+                txt = "Large";
             ReadBlock(Remote.Bot, SAV.SAV, "SecurityKey", out _);
+        }
         var valid = ReadBlock(Remote.Bot, SAV.SAV, txt, out var data);
         if (!valid || data is null)
         {
@@ -915,7 +919,10 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
             if (Remote.Bot.Injector is LPFRLG)
             {
                 var prop = sav.GetType().GetProperty(display) ?? throw new Exception($"{display} not found");
-                sb = prop.GetValue(sav);
+                if (display == "Large")
+                    sb = ((SAV3)sav).Large.ToArray();
+                else
+                    sb = prop.GetValue(sav);
                 return sb is not null;
             }
             // Check for SCBlocks or SaveBlocks based on name. (SCBlocks will invoke the hex editor, SaveBlocks will invoke a property grid
