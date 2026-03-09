@@ -17,16 +17,17 @@ public sealed class LPFRLG : InjectionBase
     private const int largeBlockSize = 0x3e00;
     private const int offsetPointerSize = 4;
     private const uint slotOffset = 4;
-    public static uint securitykey = 0;
+    public uint securitykey = 0;
 
-    public static uint GetB1S1Offset(LiveHeXVersion lv) => lv switch 
-    { 
+    public static uint GetB1S1Offset(LiveHeXVersion lv) => lv switch
+    {
         LiveHeXVersion.FRLG_E_v100 => 0xBD68D2E0,
         LiveHeXVersion.FRLG_I_v100 => 0xBD68D230,
         LiveHeXVersion.FRLG_D_v100 => 0xBD68D230,
         LiveHeXVersion.FRLG_S_v100 => 0xBD68D230,
         LiveHeXVersion.FRLG_F_v100 => 0xBD68D230,
         LiveHeXVersion.FRLG_J_v100 => 0xBD68D240,
+        _ => throw new NotImplementedException(),
     };
 
     public static uint GetLargeBlockOffset(LiveHeXVersion lv) => lv switch
@@ -37,6 +38,7 @@ public sealed class LPFRLG : InjectionBase
         LiveHeXVersion.FRLG_S_v100 => 0xBD68D228,
         LiveHeXVersion.FRLG_F_v100 => 0xBD68D228,
         LiveHeXVersion.FRLG_J_v100 => 0xBD68D238,
+        _ => throw new NotImplementedException(),
     };
 
     public static uint GetSmallBlockOffset(LiveHeXVersion lv) => lv switch
@@ -123,7 +125,7 @@ public sealed class LPFRLG : InjectionBase
         var props = sav.GetType().GetProperty(block) ?? throw new Exception($"{block} not found");
         var offsets = SCBlocks[psb.Version].FirstOrDefault(z => z.Display == (block == "Large" ? "Items" : block))
             ?? throw new KeyNotFoundException($"Block '{block}' not found for version {psb.Version}");
-        var data = block == "Large" ? ((SAV3)sav).Large.ToArray() : props.GetValue(sav);
+        var data = block == "Large" ? ((SAV3)sav).Large.ToArray() : props.GetValue(sav) ?? 0;
         if (offsets.IsSecured)
             data = (uint)data ^ ((SAV3FRLG)sav).SecurityKey;
         var blockoff = GetBlockOffset(psb, offsets);
@@ -140,7 +142,7 @@ public sealed class LPFRLG : InjectionBase
         blockoff += (uint)offsets.Offset;
         return blockoff;
     }
-    public object ConvertValue(PropertyInfo info, Span<byte> bytes)
+    public static object ConvertValue(PropertyInfo info, Span<byte> bytes)
     {
         var t = info.PropertyType;
         return t switch
@@ -172,13 +174,13 @@ public sealed class LPFRLG : InjectionBase
         Display = display,
         Offset = offset,
     };
-    public static readonly BlockData[] Blocks_FRLG = new[]
-    {
+    public static readonly BlockData[] Blocks_FRLG =
+    [
         Get(0x290, "Large", "Money", true),
         Get(0x294, "Large", "Coin", true),
         Get(0, "Large", "Items"),
         Get(0xF20, "Small", "SecurityKey")
-    };
+    ];
     public static readonly Dictionary<LiveHeXVersion, BlockData[]> SCBlocks = new()
     {
         { FRLG_D_v100, Blocks_FRLG },

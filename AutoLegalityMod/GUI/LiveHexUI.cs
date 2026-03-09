@@ -830,7 +830,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
             var res = form.ShowDialog();
             write = res == DialogResult.OK;
         }
-        else if (sb is object)
+        else if (sb is not null)
         {
             using var form = new SimpleHexEditor(data[0]);
 
@@ -843,7 +843,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
         if (!write)
             return;
 
-        if (Remote.Bot.Injector is LPBDSP)
+        if (Remote.Bot.Injector is LPBDSP && sb is not null)
         {
             Remote.Bot.Injector.WriteBlockFromString(Remote.Bot, txt, GetBlockDataRaw(sb, data[0]), sb);
         }
