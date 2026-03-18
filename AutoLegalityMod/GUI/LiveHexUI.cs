@@ -918,11 +918,11 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                 return false;
             if (Remote.Bot.Injector is LPFRLG)
             {
-                var prop = sav.GetType().GetProperty(display) ?? throw new Exception($"{display} not found");
-                if (display == "Large")
-                    sb = ((SAV3)sav).Large.ToArray();
+                var prop = sav.GetType().GetProperties().Where(p=> p.Name == subblocks[0].Name) ?? throw new Exception($"{display} not found");
+                if (subblocks[0].Name == "LargeBlock")
+                    sb = ((SAV3)sav).LargeBlock;
                 else
-                    sb = prop.GetValue(sav);
+                    sb = ((SAV3)sav).SmallBlock;
                 return sb is not null;
             }
             // Check for SCBlocks or SaveBlocks based on name. (SCBlocks will invoke the hex editor, SaveBlocks will invoke a property grid
