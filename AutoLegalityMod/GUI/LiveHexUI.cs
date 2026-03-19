@@ -1065,7 +1065,7 @@ internal class HexTextBox : TextBox
             var text = Clipboard.GetText();
             if (text.StartsWith("0x"))
             {
-                text = text[2..];
+                text = text[2..].Trim();
                 Clipboard.SetText(text);
             }
         }
