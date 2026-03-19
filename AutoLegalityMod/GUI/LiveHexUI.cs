@@ -460,7 +460,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                 }
             }
 
-            using var form = new SimpleHexEditor(result.ToArray(), Remote.Bot, offset, GetRWMethod());
+            using var form = new SimpleHexEditor(result.ToArray(), Remote.Bot, offset, GetRWMethod(),refreshrate: _settings.refreshRate);
             var loadgrid = blockview && ReflectUtil.GetPropertiesCanWritePublicDeclared(pkm!.GetType()).Count() > 1;
             if (loadgrid)
             {
@@ -469,6 +469,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
             }
 
             var res = form.ShowDialog();
+            _settings.refreshRate = form.RefreshRate;
             if (res != DialogResult.OK)
             {
                 return;
@@ -669,7 +670,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                 }
             }
 
-            using (var form = new SimpleHexEditor(result.ToArray(), Remote.Bot, address, RWMethod.Absolute, blk_key, keyval, header))
+            using (var form = new SimpleHexEditor(result.ToArray(), Remote.Bot, address, RWMethod.Absolute, blk_key, keyval, header,_settings.refreshRate))
             {
                 var loadgrid = blockview && ReflectUtil.GetPropertiesCanWritePublicDeclared(pkm!.GetType()).Count() > 1;
                 if (loadgrid)
@@ -679,6 +680,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                 }
 
                 var res = form.ShowDialog();
+                _settings.refreshRate = form.RefreshRate;
                 if (res == DialogResult.OK)
                 {
                     if (loadgrid)
@@ -808,7 +810,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
         else if (sb is SCBlock or IDataIndirect or ICustomBlock)
         {
             // Must be single block output
-            using var form = new SimpleHexEditor(data[0]);
+            using var form = new SimpleHexEditor(data[0], refreshrate: _settings.refreshRate);
             if (sb is IDataIndirect or ICustomBlock)
             {
                 var props = ReflectUtil.GetPropertiesCanWritePublicDeclared(sb.GetType());
@@ -828,16 +830,18 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                 }
             }
             var res = form.ShowDialog();
+            _settings.refreshRate = form.RefreshRate;
             write = res == DialogResult.OK;
         }
         else if (sb is not null)
         {
-            using var form = new SimpleHexEditor(data[0]);
+            using var form = new SimpleHexEditor(data[0],refreshrate: _settings.refreshRate);
 
             form.PG_BlockView.Visible = true;
             form.PG_BlockView.SelectedObject = SAV.SAV;
-            
+
             var res = form.ShowDialog();
+            _settings.refreshRate = form.RefreshRate;
             write = res == DialogResult.OK;
         }
         if (!write)
