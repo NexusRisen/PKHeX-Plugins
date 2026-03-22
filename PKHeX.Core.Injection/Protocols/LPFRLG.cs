@@ -166,6 +166,8 @@ public sealed class LPFRLG : InjectionBase
         Get(0, "LargeBlock", "Block Data"),
         Get(0, "LargeBlock", "Roamer"),
         Get(0, "LargeBlock", "Inventory"),
+        Get(0, "LargeBlock", "Event Work"),
+        Get(0, "LargeBlock", "Pokédex"),
         Get(0, "SmallBlock", "SecurityKey")
     ];
     public static readonly Dictionary<LiveHeXVersion, BlockData[]> SCBlocks = new()
@@ -180,7 +182,9 @@ public sealed class LPFRLG : InjectionBase
     public override Dictionary<string, string> SpecialBlocks { get; } = new()
     {
         { "Inventory", "B_OpenItemPouch_Click" },
-        {  "Roamer", "B_Roamer_Click"  }
+        {  "Roamer", "B_Roamer_Click"  },
+        { "Event Work", "B_OpenEventFlags_Click" },
+        {  "Pokédex", "B_OpenPokedex_Click"  },
     };
 }
 
