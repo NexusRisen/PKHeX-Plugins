@@ -545,7 +545,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
         }
         if (Remote.Bot.Injector is LPFRLG)
         {
-            var save_blocks = LPFRLG.SCBlocks[lv].Select(z => z.Display).Distinct();
+            var save_blocks = LPFRLG.SCBlocks[lv].Select(z => z.Display).Where(z=> z != "SecurityKey").Distinct();
             var blks = save_blocks.Order();
             return blks;
         }
