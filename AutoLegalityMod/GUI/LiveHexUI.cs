@@ -804,21 +804,28 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
             // Invoke function
             cc.GetType().GetMethod(v, BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(cc, [s, e]);
 
+            bool dataChanged = false;
             for (var i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is not SCBlock scb)
                 {
-                    write = true;
+                    dataChanged = true;
                 }
                 else if (!scb.Data.SequenceEqual(data[i]))
                 {
-                    write = true;
+                    dataChanged = true;
                 }
 
-                if (write)
+                if (dataChanged)
                 {
                     break;
                 }
+            }
+
+            if (dataChanged)
+            {
+                var confirm = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Apply changes to this block?");
+                write = confirm == DialogResult.Yes;
             }
         }
         else if (sb is SCBlock or IDataIndirect or ICustomBlock)
