@@ -95,7 +95,13 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
         if (!type.IsContentChange())
             return;
         SAV.SAV.AdaptToSaveFile(pkm);
-        Remote.Bot.SendSlot(RamOffsets.WriteBoxData(Remote.Bot.Version) ? pkm.EncryptedBoxData : pkm.EncryptedPartyData, SIB.Box, SIB.Slot);
+        var size = RamOffsets.WriteBoxData(Remote.Bot.Version) ? SAV.SAV.SIZE_STORED : SAV.SAV.SIZE_PARTY;
+        Span<byte> PokemonData = stackalloc byte[size];
+        if (RamOffsets.WriteBoxData(Remote.Bot.Version))
+            pkm.WriteEncryptedDataStored(PokemonData);
+        else
+            pkm.WriteEncryptedDataParty(PokemonData);
+        Remote.Bot.SendSlot(PokemonData, SIB.Box, SIB.Slot);
     }
 
     private void SetTrainerData(SaveFile sav)
@@ -478,10 +484,15 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
             if (loadgrid)
             {
                 PKM pk = pkm!;
-                var pkmbytes = RamOffsets.WriteBoxData(Remote.Bot.Version) ? pk.EncryptedBoxData : pk.EncryptedPartyData;
+                var PokemonSize = RamOffsets.WriteBoxData(Remote.Bot.Version) ? SAV.SAV.SIZE_STORED : SAV.SAV.SIZE_PARTY;
+                Span<byte> pkmbytes = stackalloc byte[Remote.Bot.SlotSize];
+                if (RamOffsets.WriteBoxData(Remote.Bot.Version))
+                    pk.WriteEncryptedDataStored(pkmbytes);
+                else
+                    pk.WriteEncryptedDataParty(pkmbytes);
                 if (pkmbytes.Length == Remote.Bot.SlotSize)
                 {
-                    form.Bytes = pkmbytes;
+                    form.Bytes = pkmbytes.ToArray();
                 }
                 else
                 {
@@ -686,10 +697,15 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
                     if (loadgrid)
                     {
                         PKM pk = pkm!;
-                        var pkmbytes = RamOffsets.WriteBoxData(Remote.Bot.Version) ? pk.EncryptedBoxData : pk.EncryptedPartyData;
+                        var PokemonSize = RamOffsets.WriteBoxData(Remote.Bot.Version) ? SAV.SAV.SIZE_STORED : SAV.SAV.SIZE_PARTY;
+                        Span<byte> pkmbytes = stackalloc byte[Remote.Bot.SlotSize];
+                        if (RamOffsets.WriteBoxData(Remote.Bot.Version))
+                            pk.WriteEncryptedDataStored(pkmbytes);
+                        else
+                            pk.WriteEncryptedDataParty(pkmbytes);
                         if (pkmbytes.Length == Remote.Bot.SlotSize)
                         {
-                            form.Bytes = pkmbytes;
+                            form.Bytes = pkmbytes.ToArray();
                         }
                         else
                         {
@@ -745,8 +761,6 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
         var version = Remote.Bot.Version;
         if (version >= LiveHeXVersion.FRLG_E_v100)
         {
-            if (txt == "Items")
-                txt = "Large";
             ReadBlock(Remote.Bot, SAV.SAV, "SecurityKey", out _);
         }
         var valid = ReadBlock(Remote.Bot, SAV.SAV, txt, out var data);
