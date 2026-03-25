@@ -20,7 +20,7 @@ public partial class LiveHeXUI : Form, ISlotViewer<PictureBox>
     public int ViewIndex => BoxSelect?.SelectedIndex ?? 0;
     public IList<PictureBox> SlotPictureBoxes => throw new InvalidOperationException();
     SaveFile ISlotViewer<PictureBox>.SAV => throw new InvalidOperationException();
-    public void ApplyNewFilter(Func<PKM, bool>? filter, bool reload = true) => throw new InvalidOperationException();
+    public void ApplyNewFilter(Func<PKM, bool>? filter, bool reload = true) {}
     private LiveHeXController Remote;
     private readonly SaveDataEditor<PictureBox> x;
     private readonly PluginSettings _settings;
