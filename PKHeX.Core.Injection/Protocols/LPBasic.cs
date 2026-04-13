@@ -82,9 +82,7 @@ public sealed class LPBasic : InjectionBase
 
     public override void SendBox(PokeSysBotMini psb, Span<byte> boxData, int box)
     {
-        var size = psb.SlotSize;
-        for (int i = 0; i < psb.SlotCount; i++)
-            SendSlot(psb, boxData.Slice(i * size, size), box, i);
+        psb.com.WriteBytes(boxData, psb.GetBoxOffset(box));
     }
 
     public static readonly Func<PokeSysBotMini, byte[]?> GetTrainerData = psb =>
