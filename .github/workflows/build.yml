@@ -38,8 +38,13 @@ jobs:
     - name: Copy PKHeX.Core to NuGet cache
       shell: powershell
       run: |
-        $nugetver = (Get-ChildItem "${{ env.USERPROFILE }}/.nuget/packages/pkhex.core" | Sort-Object -Property LastWriteTime -Descending)[0].Name
-        Copy-Item "PKHeX\PKHeX.Core\bin\Any CPU\Release\net10.0\PKHeX.Core.dll" "${{ env.USERPROFILE }}\.nuget\packages\pkhex.core\$nugetver\lib\net10.0"
+        $pkgDir = "${{ env.USERPROFILE }}\.nuget\packages\pkhex.core"
+        if (Test-Path $pkgDir) {
+          $nugetver = (Get-ChildItem $pkgDir | Sort-Object -Property LastWriteTime -Descending)[0].Name
+          $targetDir = "$pkgDir\$nugetver\lib\net10.0"
+          if (-not (Test-Path $targetDir)) { New-Item -ItemType Directory -Path $targetDir -Force | Out-Null }
+          Copy-Item "PKHeX\PKHeX.Core\bin\Any CPU\Release\net10.0\PKHeX.Core.dll" $targetDir
+        }
 
     - name: Build PKHeX-Plugins
       run: dotnet build ${{ env.SOLUTION }} -c ${{ env.BUILD_CONFIGURATION }} -p:Platform="${{ env.BUILD_PLATFORM }}"
