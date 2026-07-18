@@ -14,7 +14,7 @@ Please refer to the [Wiki](https://github.com/santacrab2/PKHeX-Plugins/wiki) fir
 **Website with Links to downloads for this and other projects by Santacrab**
 [The Sea Tavern's website](https://piplup.net)
 
-## Building  
+## Building  (Developers Only)
 This project requires an IDE that supports compiling .NET based code, such as Visual Studio 2026, and the [.NET 10.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
 
 **Regular Builds**  
