@@ -3,7 +3,7 @@ This project uses `PKHeX.Core` and PKHeX's `IPlugin` interface to add enhancemen
 This Fork is owned by [@santacrab2](https://github.com/santacrab2)
 The original project is owned by [@architdate](https://github.com/architdate) (Discord: thecommondude) and [@kwsch](https://github.com/kwsch) (Discord: kwsch).
 
-## Usage and Installation
+## Installation and Usage
 If you are trying to install the plugin, follow these instructions on the Wiki. The Wiki also documents other features of the program.
 https://github.com/santacrab2/PKHeX-Plugins/wiki/Installing-PKHeX-Plugins
 
