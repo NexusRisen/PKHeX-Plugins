@@ -262,7 +262,7 @@ public static class ShowdownSetLoader
 
         foreach (var ep in Enum.GetValues<EncounterTypeGroup>())
         {
-            if (!settings.PrioritizeEncounters.Contains(ep))
+            if (!settings.PrioritizeEncounters.Contains(ep) && ep != 0)
                 settings.PrioritizeEncounters.Add(ep);
         }
 
