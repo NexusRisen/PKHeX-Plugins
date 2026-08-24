@@ -16,7 +16,6 @@ public class LegalizeBoxes : AutoModPlugin
     {
         var ctrl = new ToolStripMenuItem(Name) {
             Image = WinFormsUtil.GetIconForTheme(Resources.legalizeboxes, Application.IsDarkModeEnabled),
-            ShortcutKeys = Keys.Shift | Keys.Control | Keys.I,
         };
         ctrl.Click += Legalize;
         ctrl.Name = "Menu_LeaglizeBoxes";
